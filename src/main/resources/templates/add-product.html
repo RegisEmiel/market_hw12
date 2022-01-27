@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Добавить товар</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+
+    <style>
+        .error {color:red}
+    </style>
+</head>
+
+<html>
+    <body>
+        <div>
+            <h1>Добавление товара</h1>
+            <article>
+                <form th:action="@{/add}" th:object="${product}" method="post" enctype="multipart/form-data">
+                    <input type="text" th:field="*{title}" placeholder="Введите название товара" class="form-row"><br>
+                    <input type="text" th:field="*{vendorCode}" placeholder="Введите код поставщика" class="form-row"><br>
+                    <div class="form-row">
+                        <label>Выберите категорию</label>
+                        <select th:field="*{category.id}">
+                            <option th:each="category: ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.title}" >
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <input type="number" th:field="*{price}" placeholder="Введите цену товара" class="form-row"><br>
+                    <input th:field="*{shortDescription}" type="text" placeholder="Введите краткое описание" class="form-row"><br>
+                    <input th:field="*{fullDescription}" type="text" placeholder="Введите полное описание" class="form-row"><br>
+                    <div class="form-row">
+                        <label>Картинка</label>
+                        <input type="file" name="file" accept="image/*"/>
+                    </div>
+                    <button name="addNewProductPost" type="submit" class="form-row">Добавить</button>
+                </form>
+            </article>
+        </div>
+    </body>
+</html>
